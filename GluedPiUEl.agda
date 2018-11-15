@@ -5,13 +5,16 @@ module GluedPiUEl where
 open import StrictLib hiding (id; _∘_)
 open import GluedCwF
 import Syntax as S
+import WeakMorphism as F
 
 Π :
   ∀{i}{Γˢ : S.Con i}            {Γ : Con _ Γˢ}
    {j}{Aˢ : S.Ty Γˢ j}          (A : Ty Γ _ Aˢ)
    {k}{Bˢ : S.Ty (Γˢ S.▶ Aˢ) k} (B : Ty (Γ ▶ A) _ Bˢ)
    → Ty Γ (j ⊔ k) (S.Π Aˢ Bˢ)
-Π = {!!}
+Π {i} {Γˢ} {Γ} {j} {Aˢ} A {k} {Bˢ} B Γᶠ Γᴾ fᶠ =
+  {!!}
+
 
 --   Π[] :
 --     ∀{i}{Γˢ : S.Con i}           {Γ : Con _ Γˢ}

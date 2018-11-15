@@ -70,7 +70,7 @@ id = refl
 
 Π←    : ∀{i}{Γˢ : S.Con i}{j}{Γ}(Aˢ : S.Ty Γˢ j){k}(Bˢ : S.Ty (Γˢ S.▶ Aˢ) k)
         → ((A : Ty Aˢ Γ) → Ty Bˢ (▶← (Γ , A))) → Ty (S.Π Aˢ Bˢ) Γ
-Π← {i} {Γˢ} {j} {Γ} Aˢ {k} Bˢ f = S.lam {!!}  -- TODO
+Π← {i} {Γˢ} {j} {Γ} Aˢ {k} Bˢ f = S.lam {!!}  -- doesn't seem possible
 
 --   Πp    : ∀{i}{Γˢ : S.Con i}{j}{Γ}{Aˢ : S.Ty Γˢ j}{k}{Bˢ : S.Ty (Γˢ S.▶ Aˢ) k}(f : ((A : Ty Aˢ Γ) → Ty Bˢ (▶← (Γ , A)))) A
 --           → Π→ Aˢ Bˢ (Π← Aˢ Bˢ f) A ≡ f A
@@ -80,12 +80,14 @@ id = refl
 
 -- {-# REWRITE π₂ []t Πp Πq #-}
 
--- postulate
---   lam   : ∀{i}{Γˢ : S.Con i}{j}{Aˢ : S.Ty Γˢ j}{k}{Bˢ : S.Ty (Γˢ S.▶ Aˢ) k}(tˢ : S.Tm (Γˢ S.▶ Aˢ) Bˢ)
---           → Tm (S.lam tˢ) ≡ (λ Γ → Π← Aˢ Bˢ (λ A → Tm tˢ (▶← (Γ , A))))
 
---   app   : ∀{i}{Γˢ : S.Con i}{j}{Aˢ : S.Ty Γˢ j}{k}{Bˢ : S.Ty (Γˢ S.▶ Aˢ) k}(tˢ : S.Tm Γˢ (S.Π Aˢ Bˢ))
---           → Tm (S.app tˢ) ≡ (λ Γ → Π→ Aˢ Bˢ (Tm tˢ (▶→ Γ .₁)) (▶→ Γ .₂))
+-- lam   : ∀{i}{Γˢ : S.Con i}{j}{Aˢ : S.Ty Γˢ j}{k}{Bˢ : S.Ty (Γˢ S.▶ Aˢ) k}(tˢ : S.Tm (Γˢ S.▶ Aˢ) Bˢ)
+--         → Tm (S.lam tˢ) ≡ (λ Γ → Π← Aˢ Bˢ (λ A → Tm tˢ (▶← (Γ , A))))
+-- lam = {!!}
+
+app   : ∀{i}{Γˢ : S.Con i}{j}{Aˢ : S.Ty Γˢ j}{k}{Bˢ : S.Ty (Γˢ S.▶ Aˢ) k}(tˢ : S.Tm Γˢ (S.Π Aˢ Bˢ))
+        → Tm (S.app tˢ) ≡ (λ Γ → Π→ Aˢ Bˢ (Tm tˢ (▶→ Γ .₁)) (▶→ Γ .₂))
+app = {!!}
 
 --   U     : ∀{i}{Γˢ : S.Con i}{j : Level} → Ty (S.U {i}{Γˢ} j) ≡ (λ Γ → Set j)
 -- {-# REWRITE lam app U #-}
