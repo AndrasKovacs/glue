@@ -96,13 +96,14 @@ postulate
   app   : ∀{i}{Γˢ : S.Con i}{j}{Aˢ : S.Ty Γˢ j}{k}{Bˢ : S.Ty (Γˢ S.▶ Aˢ) k}(tˢ : S.Tm Γˢ (S.Π Aˢ Bˢ))
           → Tm (S.app tˢ) ≡ (λ Γ → Π→ _ Aˢ Bˢ (Tm tˢ (▶→ Γ .₁)) (▶→ Γ .₂))
 
-  U     : ∀{i}{Γˢ : S.Con i}{j : Level} → Ty (S.U {i}{Γˢ} j) ≡ (λ Γ → Set j)
-{-# REWRITE lam app U #-}
+  U→    : ∀{i}{Γˢ : S.Con i}{j : Level}{Γ} → Ty (S.U {i}{Γˢ} j) Γ → Set j
+{-# REWRITE lam app #-}
 
 postulate
-  El    : ∀{i}{Γˢ : S.Con i}{j}(aˢ : S.Tm Γˢ (S.U j)) → Ty (S.El aˢ) ≡ Tm aˢ
-  c     : ∀{i}{Γˢ : S.Con i}{j}(Aˢ : S.Ty Γˢ j) → Tm (S.c Aˢ) ≡ Ty Aˢ
-{-# REWRITE El c #-}
+  El→   : ∀{i}{Γˢ : S.Con i}{j}(aˢ : S.Tm Γˢ (S.U j)) Γ → Ty (S.El aˢ) Γ → U→ (Tm aˢ Γ)
+  c→    : ∀{i}{Γˢ : S.Con i}{j}(Aˢ : S.Ty Γˢ j) Γ → U→ (Tm (S.c Aˢ) Γ) → Ty Aˢ Γ
+  -- Elc→  : ∀{i}{Γˢ : S.Con i}{j} aˢ (Aˢ : S.Ty Γˢ j) Γ x → El→ aˢ Γ (c→ (S.El aˢ) Γ x) ≡ x
+  cEl→
 
 
 -- rewrite specializations

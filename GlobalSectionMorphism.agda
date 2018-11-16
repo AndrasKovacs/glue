@@ -89,10 +89,20 @@ app   : ∀{i}{Γˢ : S.Con i}{j}{Aˢ : S.Ty Γˢ j}{k}{Bˢ : S.Ty (Γˢ S.▶ A
         → Tm (S.app tˢ) ≡ (λ Γ → Π→ Aˢ Bˢ (Tm tˢ (▶→ Γ .₁)) (▶→ Γ .₂))
 app = {!!}
 
---   U     : ∀{i}{Γˢ : S.Con i}{j : Level} → Ty (S.U {i}{Γˢ} j) ≡ (λ Γ → Set j)
+-- Only works if other model is Set (in other cases)
+U→ : ∀{i}{Γˢ : S.Con i}{j : Level} → S.Tm S.∙ (S.U j) → Set j
+U→ {i}{Γˢ}{j} a = S.Tm S.∙ (S.El a)
+
+-- U← : ∀{i}{Γˢ : S.Con i}{j : Level} → Set j → S.Tm S.∙ (S.U j)
+-- U← A = {!!}
+
+-- U : ∀{i}{Γˢ : S.Con i}{j : Level} → Ty (S.U {i}{Γˢ} j) ≡ (λ Γ → Set j)
+-- U {i} {Γˢ} {j} = {!!}
 -- {-# REWRITE lam app U #-}
 
 -- postulate
---   El    : ∀{i}{Γˢ : S.Con i}{j}(aˢ : S.Tm Γˢ (S.U j)) → Ty (S.El aˢ) ≡ Tm aˢ
+El : ∀{i}{Γˢ : S.Con i}{j}(aˢ : S.Tm Γˢ (S.U j)) → Ty (S.El aˢ) ≡ {!Tm aˢ!} -- Tm aˢ
+El = {!!}
+
 --   c     : ∀{i}{Γˢ : S.Con i}{j}(Aˢ : S.Ty Γˢ j) → Tm (S.c Aˢ) ≡ Ty Aˢ
 -- {-# REWRITE El c #-}
