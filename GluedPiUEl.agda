@@ -14,7 +14,10 @@ import WeakMorphism as F
    → Ty Γ (j ⊔ k) (S.Π Aˢ Bˢ)
 Π {i} {Γˢ} {Γ} {j} {Aˢ} A {k} {Bˢ} B Γᶠ Γᴾ fᶠ =
     (Aᶠ : F.Ty Aˢ Γᶠ)(Aᴾ : A Γᶠ Γᴾ Aᶠ)
-  → B (F.▶← (Γᶠ , Aᶠ)) (Γᴾ , Aᴾ) (F.Π→ Aˢ Bˢ fᶠ Aᶠ)
+  → B (F.▶← (Γᶠ , Aᶠ)) (Γᴾ , Aᴾ) (F.Π→ _ Aˢ Bˢ fᶠ Aᶠ)
+
+postulate
+  posting : ∀ {i j}{B : Set j}(A : Set i) → (A → B) → B
 
 Π[] :
      {i : Level} {Γˢ : S.Con i} {Γ : Con i Γˢ} {j : Level} {Aˢ : S.Ty {i} Γˢ j} {A :
@@ -35,17 +38,20 @@ import WeakMorphism as F
      {j} {Aˢ} A {l} {θˢ} {θ} {σˢ} σ)} {S._^_ {l} {θˢ} {i} {Γˢ} σˢ {j} Aˢ} (_^_ {l}
      {θˢ} {θ} {i} {Γˢ} {Γ} {σˢ} σ {j} {Aˢ} A)))
 Π[] {i} {Γˢ} {Γ} {j} {Aˢ} {A} {k} {Bˢ} {B} {l} {θˢ} {θ} {σˢ} {σ} =
-  ext λ Γᶠ → ext λ Γᴾ → ext λ fᶠ → {!ext λ Aᶠ → ?!}
+  ext λ Γᶠ → ext λ Γᴾ → ext λ fᶠ → posting (F.Ty Aˢ (F.Sub σˢ Γᶠ)) λ Aᶠ → cheat -- OK by Π→ naturality
 
 
---   lam :
---      {i : Level} {Γˢ : S.Con i} {Γ : Con i Γˢ} {j : Level} {Aˢ : S.Ty {i}
---      Γˢ j} {A : Ty {i} {Γˢ} Γ j Aˢ} {k : Level} {Bˢ : S.Ty {i ⊔ j} (S._▶_
---      {i} Γˢ {j} Aˢ) k} {B : Ty {i ⊔ j} {S._▶_ {i} Γˢ {j} Aˢ} (_▶_ {i} {Γˢ}
---      Γ {j} {Aˢ} A) k Bˢ} {tˢ : S.Tm {i ⊔ j} (S._▶_ {i} Γˢ {j} Aˢ) {k} Bˢ} →
---      Tm {i ⊔ j} {S._▶_ {i} Γˢ {j} Aˢ} (_▶_ {i} {Γˢ} Γ {j} {Aˢ} A) {k} {Bˢ}
---      B tˢ → Tm {i} {Γˢ} Γ {j ⊔ k} {S.Π {i} {Γˢ} {j} Aˢ {k} Bˢ} (Π {i} {Γˢ}
---      {Γ} {j} {Aˢ} A {k} {Bˢ} B) (S.lam {i} {Γˢ} {j} {Aˢ} {k} {Bˢ} tˢ)
+lam :
+   {i : Level} {Γˢ : S.Con i} {Γ : Con i Γˢ} {j : Level} {Aˢ : S.Ty {i}
+   Γˢ j} {A : Ty {i} {Γˢ} Γ j Aˢ} {k : Level} {Bˢ : S.Ty {i ⊔ j} (S._▶_
+   {i} Γˢ {j} Aˢ) k} {B : Ty {i ⊔ j} {S._▶_ {i} Γˢ {j} Aˢ} (_▶_ {i} {Γˢ}
+   Γ {j} {Aˢ} A) k Bˢ} {tˢ : S.Tm {i ⊔ j} (S._▶_ {i} Γˢ {j} Aˢ) {k} Bˢ} →
+   Tm {i ⊔ j} {S._▶_ {i} Γˢ {j} Aˢ} (_▶_ {i} {Γˢ} Γ {j} {Aˢ} A) {k} {Bˢ}
+   B tˢ → Tm {i} {Γˢ} Γ {j ⊔ k} {S.Π {i} {Γˢ} {j} Aˢ {k} Bˢ} (Π {i} {Γˢ}
+   {Γ} {j} {Aˢ} A {k} {Bˢ} B) (S.lam {i} {Γˢ} {j} {Aˢ} {k} {Bˢ} tˢ)
+lam {i} {Γˢ} {Γ} {j} {Aˢ} {A} {k} {Bˢ} {B} {tˢ} t =
+  {!!}
+
 
 --   app :
 --      {i : Level} {Γˢ : S.Con i} {Γ : Con i Γˢ} {j : Level} {Aˢ : S.Ty {i}
