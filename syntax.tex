@@ -77,9 +77,10 @@ $_i$, $_j$ indices are metatheoretic universe levels.
   & {\Pi[]} && : && (\Pi\,A\,B)[\sigma] = \Pi\,(A[\sigma])\,(B[\sigma^\uparrow]) \\
   & {\app[]} && : && (\app\,t)[\sigma^\uparrow] = \app\,(t[\sigma]) \\
   & \heading{Abbreviations} \\
+  & {\app[]} && : && (\app\,t)[\sigma^\uparrow] = \app\,(t[\sigma]) && := \dots \\
   & \blank\Ra\blank && : && \Ty_i\,\Gamma\ra\Ty_j\,\Gamma\ra\Ty_{\max\,\i\,j}\,\Gamma && := \lambda A\,B.\Pi\,A\,(B[\wk]) \\
   & \blank\oldapp\blank && : && \Tm\,\Gamma\,(\Pi\,A\,B)\ra(u : \Tm\,\Gamma\,A)\ra\Tm\,\Gamma\,(B[\lb u\rb]) && := \lambda t\,u.(\app\,t)[\lb u \rb] \\
-  & {\app[]} && : && (\app\,t)[\sigma^\uparrow] = \app\,(t[\sigma]) && := \dots \\
+  & {{\oldapp}\beta} && : && (\lam\,t)\oldapp u = t[\lb u\rb] && := \dots \\
   & \heading{Sigma} \\
   & \Sigma && : && (A:\Ty_i\,\Gamma)\ra\Ty_j\,(\Gamma\rhd A)\ra\Ty_{\max\,i\,j}\,\Gamma \\
   & \blank,\blank && : && (u:\Tm\,\Gamma\,A)\ra\Tm\,\Gamma\,(B[\lb u\rb])\ra\Tm\,\Gamma\,(\Sigma\,A\,B) \\
