@@ -1,0 +1,125 @@
+\documentclass{article}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage{proof}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage{pdflscape}
+\usepackage{multirow,bigdelim}
+\usepackage{hyperref}
+\input{abbrevs.tex}
+
+\allowdisplaybreaks
+
+\begin{document}
+
+\title{Type theory}
+\maketitle
+
+We define type theory as a generalised algebraic theory (or quotient
+inductive-inductive type) in an extensional metatheory. This is an
+algebraic presentation of (predicative) CwFs with extra structure. The
+$_i$, $_j$ indices are metatheoretic universe levels.
+\begin{alignat*}{5}
+  & \heading{Declaration} \\
+  & \Con_i && :\,\, && \Set \\
+  & \Ty_j  && : && \Con_i\ra\Set \\
+  & \Tms && : && \Con_i\ra\Con_j\ra\Set \\
+  & \Tm  && : && (\Gamma:\Con_i)\ra\Ty_j\,\Gamma\ra\Set \\
+  & \heading{Substitution calculus} \\
+  & \cdot && : && \Con_0 \\
+  & \blank\rhd\blank && : && (\Gamma:\Con_i)\ra\Ty_j\,\Gamma\ra\Con_{\max\,i\,j} \\
+  & \blank[\blank] && : && \Ty_j\,\Delta\ra\Tms\,\Gamma\,\Delta\ra\Ty_j\,\Gamma \\
+  & \id && : && \Tms\,\Gamma\,\Gamma \\
+  & \blank\circ\blank && : && \Tms\,\Theta\,\Delta\ra\Tms\,\Gamma\,\Theta\ra\Tms\,\Gamma\,\Delta \\
+  & \epsilon && : && \Tms\,\Gamma\,\cdot \\
+  & \blank,\blank && : && (\sigma:\Tms\,\Gamma\,\Delta)\ra\Tm\,\Gamma\,(A[\sigma])\ra\Tms\,\Gamma\,(\Delta\rhd A) \\
+  & \pi_1 && : && \Tms\,\Gamma\,(\Delta\rhd A) \ra \Tms\,\Gamma\,\Delta \\
+  & \pi_2 && : && (\sigma:\Tms\,\Gamma\,(\Delta\rhd A))\ra\Tm\,\Gamma\,(A[\pi_1\,\sigma]) \\
+  & \blank[\blank] && : && \Tm\,\Delta\,A\ra(\sigma:\Tms\,\Gamma\,\Delta)\ra\Tm\,\Gamma\,(A[\sigma]) \\
+  & [\id] && : && A[\id] = A \\
+  & [\circ] && : && A[\sigma \circ \delta] = A[\sigma][\delta] \\
+  & \ass && : && (\sigma \circ \delta) \circ \nu = \sigma \circ (\delta \circ \nu) \\
+  & \idl && : && \id\circ\sigma = \sigma \\
+  & \idr && : && \sigma\circ\id = \sigma \\
+  & {\cdot\eta} && : && (\sigma : \Tms\,\Gamma\,\cdot) = \epsilon \\
+  & {\rhd\beta_1} && : && \pi_1\,(\sigma, t) = \sigma \\
+  & {\rhd\beta_2} && : && \pi_2\,(\sigma, t) = t \\
+  & {\rhd\eta} && : && (\pi_1\,\sigma, \pi_2\,\sigma) = \sigma \\
+  & {,\circ} && : && (\sigma, t)\circ\delta = (\sigma\circ\delta, t[\delta]) \\
+  & \heading{Abbreviations} \\
+  & \wk && : && \Tms\,(\Gamma\rhd A)\,\Gamma && := \pi_1\,\id \\
+  & \vz && : && \Tm\,(\Gamma\rhd A)\,(A[\wk]) && := \pi_2\,\id \\
+  & \vs && : && \Tm\,\Gamma\,A\ra\Tm\,(\Gamma\rhd B)\,(A[\wk]) && := \lambda t.t[\wk] \\
+  & \lb\blank\rb && : && \Tm\,\Gamma\,A\ra\Tms\,\Gamma\,(\Gamma\rhd A) && := \lambda t.(\id, t) \\
+  & \blank^\uparrow && : && (\sigma:\Tms\,\Gamma\,\Delta)\ra\Tms\,(\Gamma\rhd A[\sigma])\,(\Delta\rhd A) && := \lambda\sigma.(\sigma\circ\wk, \vz) \\
+  & [\id] && : && t[\id] = t && := \dots \\
+  & [\circ] && : && t[\sigma\circ\delta] = t[\sigma][\delta] && := \dots \\
+  & {\pi_1\circ} && : && (\pi_1\,\sigma)\circ\delta = \pi_1\,(\sigma\circ\delta) && := \dots \\
+  & {\pi_2[]} && : && (\pi_2\,\sigma)[\delta] = \pi_2\,(\sigma\circ\delta) && := \dots \\
+  & \heading{Coquand universes} \\
+  & \U_i && : && \Ty_{i+1}\,\Gamma \\
+  & \El && : && \Tm\,\Gamma\,\U_i \ra \Ty_i\,\Gamma \\
+  & \c && : && \Ty_i\,\Gamma\ra\Tm\,\Gamma\,\U_i \\
+  & {\U\beta} && : && \El\,(\c\,A) = A \\
+  & {\U\eta} && : && \c\,(\El\,a) = a \\
+  & {\U[]} && : && \U_i[\sigma] = \U_i \\
+  & {\El[]} && : && (\El\,a)[\sigma] = \El\,(a[\sigma]) \\
+  & \heading{Abbreviation} \\
+  & {\c[]} && : && (\c\,A)[\sigma] = \c\,(A[\sigma]) && := \dots \\
+  & \heading{Function space} \\
+  & \Pi && : && (A:\Ty_i\,\Gamma)\ra\Ty_j\,(\Gamma\rhd A)\ra\Ty_{\max\,i\,j}\,\Gamma \\
+  & \lam && : && \Tm\,(\Gamma\rhd A)\,B\ra\Tm\,\Gamma\,(\Pi\,A\,B) \\
+  & \app && : && \Tm\,\Gamma\,(\Pi\,A\,B)\ra\Tm\,(\Gamma\rhd A)\,B \\
+  & {\Pi\beta} && : && \app\,(\lam\,t) = t \\
+  & {\Pi\eta} && : && \lam\,(\app\,t) = t \\
+  & {\Pi[]} && : && (\Pi\,A\,B)[\sigma] = \Pi\,(A[\sigma])\,(B[\sigma^\uparrow]) \\
+  & {\app[]} && : && (\app\,t)[\sigma^\uparrow] = \app\,(t[\sigma]) \\
+  & \heading{Abbreviations} \\
+  & \blank\Ra\blank && : && \Ty_i\,\Gamma\ra\Ty_j\,\Gamma\ra\Ty_{\max\,\i\,j}\,\Gamma && := \lambda A\,B.\Pi\,A\,(B[\wk]) \\
+  & \blank\oldapp\blank && : && \Tm\,\Gamma\,(\Pi\,A\,B)\ra(u : \Tm\,\Gamma\,A)\ra\Tm\,\Gamma\,(B[\lb u\rb]) && := \lambda t\,u.(\app\,t)[\lb u \rb] \\
+  & {\app[]} && : && (\app\,t)[\sigma^\uparrow] = \app\,(t[\sigma]) && := \dots \\
+  & \heading{Sigma} \\
+  & \Sigma && : && (A:\Ty_i\,\Gamma)\ra\Ty_j\,(\Gamma\rhd A)\ra\Ty_{\max\,i\,j}\,\Gamma \\
+  & \blank,\blank && : && (u:\Tm\,\Gamma\,A)\ra\Tm\,\Gamma\,(B[\lb u\rb])\ra\Tm\,\Gamma\,(\Sigma\,A\,B) \\
+  & \proj_1 && : && \Tm\,\Gamma\,(\Sigma\,A\,B)\ra\Tm\,\Gamma\,A \\
+  & \proj_2 && : && (t:\Tm\,\Gamma\,(\Sigma\,A\,B))\ra\Tm\,\Gamma\,(B[\lb \proj_1\,u\rb]) \\
+  & {\Sigma\beta}_1 && : && \proj_1\,(u,v) = u \\
+  & {\Sigma\beta}_2 && : && \proj_2\,(u,v) = v \\
+  & {\Sigma\eta} && : && (\proj_1\,t, \proj_2\,t) = t \\
+  & {\Sigma[]} && : && (\Sigma\,A\,B)[\sigma] = \Sigma\,(A[\sigma])\,(B[\sigma^\uparrow]) \\
+  & {,[]} && : && (u,v)[\sigma] = (u[\sigma], v[\sigma]) \\
+  & \heading{Abbreviations} \\
+  & {\proj_1[]} && : && (\proj_1\,t)[\sigma] = \proj_1\,(t[\sigma]) && := \dots \\
+  & {\proj_2[]} && : && (\proj_2\,t)[\sigma] = \proj_2\,(t[\sigma]) && := \dots \\
+  & \heading{Unit} \\
+  & \top && : && \Ty_i\,\Gamma \\
+  & \tt && : && \Tm\,\Gamma\,\top \\
+  & {\top[]} && : && \top[\sigma] = \top \\
+  & {\tt[]} && : && \tt[\sigma] = \tt \\
+  & \heading{Booleans} \\
+  & \Bool && : && \Ty_0 \\
+  & \true && : && \Tm\,\Gamma\,\Bool \\
+  & \false && : && \Tm\,\Gamma\,\Bool \\
+  & \IF && : && (P:\Ty_i\,(\Gamma\rhd\Bool))\ra\Tm\,\Gamma\,(P[\lb\true\rb])\ra\Tm\,\Gamma\,(P[\lb\false\rb])\ra \\
+  & && && (t:\Tm\,\Gamma\,\Bool)\ra\Tm\,\Gamma\,(P[\lb t\rb]) \\
+  & {\Bool\beta}_\true && : && \IF\,P\,u\,v\,\true = u \\
+  & {\Bool\beta}_\false && : && \IF\,P\,u\,v\,\false = v \\
+  & {\Bool[]} && : && \Bool[\sigma] = \Bool \\
+  & {\true[]} && : && \true[\sigma] = \true \\
+  & {\false[]} && : && \false[\sigma] = \false \\
+  & {\IF[]} && : && (\IF\,P\,u\,v\,t)[\sigma] = \IF\,(P[\sigma^\uparrow])\,(u[\sigma])\,(v[\sigma])\,(t[\sigma]) \\
+  & \heading{Identity} \\
+  & \Id && : && (A:\Ty_i\,\Gamma)\ra\Tm\,\Gamma\,A\ra\Tm\,\Gamma\,A\ra\Ty_i\,\Gamma \\
+  & \refl && : && (u : \Tm\,\Gamma\,A) \ra \Tm\,\Gamma\,(\Id\,A\,t\,t) \\
+  & \J && : && (P : \Ty_i\,(\Gamma\rhd A\rhd \Id\,(A[\wk])\,(u[\wk])\,\vz))\ra \\
+  & && && \Tm\,\Gamma\,(P[\id,u,\refl\,(u[\wk])])\ra(t:\Tm\,\Gamma\,(\Id\,A\,u\,v))\ra \\
+  & && && \Tm\,\Gamma\,(P[\id,v,t[\wk]]) \\
+  & {\Id\beta} && : && \J\,P\,w\,(\refl\,u) = w \\
+  & {\Id[]} && : && (\Id\,A\,u\,v)[\sigma] = \Id\,(A[\sigma])\,(u[\sigma])\,(v[\sigma]) \\
+  & {\refl[]} && : && (\refl\,u)[\sigma] = \refl\,(u[\sigma]) \\
+  & {\J[]} && : && (\J\,P\,w\,t)[\sigma] = \J\,(P[{\sigma^\uparrow}^\uparrow])\,(w[\sigma])\,(t[\sigma]) \\
+\end{alignat*}
+
+\end{document}
