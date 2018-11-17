@@ -259,3 +259,44 @@ postulate
     ∀{i}{Γˢ : S.Con i} {Γ : Con _ Γˢ}
      {j}{aˢ : S.Tm Γˢ (S.U j)}{a : Tm Γ (U j) aˢ}
      → c (El a) ≡ a
+
+  Bool :
+    ∀{i}{Γˢ : S.Con i}{Γ : Con _ Γˢ}
+    → Ty Γ zero S.Bool
+
+  Bool[] :
+    ∀{i}{Γˢ : S.Con i}     {Γ : Con _ Γˢ}
+     {j}{Δˢ : S.Con j}     {Δ : Con _ Δˢ}
+        {σˢ : S.Sub Γˢ Δˢ} {σ : Sub Γ Δ σˢ}
+     → Bool [ σ ]T ≡ Bool
+
+  true :
+    ∀{i}{Γˢ : S.Con i}{Γ : Con _ Γˢ}
+    → Tm Γ Bool S.true
+
+  true[] :
+    ∀{i}{Γˢ : S.Con i}     {Γ : Con _ Γˢ}
+     {j}{Δˢ : S.Con j}     {Δ : Con _ Δˢ}
+        {σˢ : S.Sub Γˢ Δˢ} {σ : Sub Γ Δ σˢ}
+     → true [ σ ]t ≡ coe ((λ x → Tm Γ x S.true) & (Bool[] ⁻¹)) true
+
+  false :
+    ∀{i}{Γˢ : S.Con i}{Γ : Con _ Γˢ}
+    → Tm Γ Bool S.false
+
+  false[] :
+    ∀{i}{Γˢ : S.Con i}     {Γ : Con _ Γˢ}
+     {j}{Δˢ : S.Con j}     {Δ : Con _ Δˢ}
+        {σˢ : S.Sub Γˢ Δˢ} {σ : Sub Γ Δ σˢ}
+     → false [ σ ]t ≡ coe ((λ x → Tm Γ x S.false) & (Bool[] ⁻¹)) false
+
+  ite :
+    ∀{i}{Γˢ : S.Con i}                {Γ : Con _ Γˢ}
+     {j}{Pˢ : S.Ty (Γˢ S.▶ S.Bool) j} (P : Ty (Γ ▶ Bool) j Pˢ)
+        {tˢ : S.Tm Γˢ (Pˢ S.[ S.id S.,s S.true ]T)}
+           (t : Tm Γ (P [ id ,s coe ((λ x → Tm Γ x S.true) & (Bool[] ⁻¹)) true ]T) tˢ)
+        {fˢ : S.Tm Γˢ (Pˢ S.[ S.id S.,s S.false ]T)}
+           (f : Tm Γ (P [ id ,s coe ((λ x → Tm Γ x S.false) & (Bool[] ⁻¹)) false ]T) fˢ)
+        {bˢ : S.Tm Γˢ S.Bool}
+           (b : Tm Γ Bool bˢ)
+    → Tm Γ (P [ id ,s coe ((λ x → Tm Γ x bˢ) & (Bool[] ⁻¹)) b ]T) (S.ite Pˢ tˢ fˢ bˢ)
