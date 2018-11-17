@@ -2,6 +2,21 @@
 
 module WeakMorphism where
 
+{-
+Tentatively on what's actually needed for canonicity and glued:
+
+- Iso for comprehension, *without* naturality or roundtrips (todo: check)
+
+- → direction for U with naturality
+
+- → direction for Π with naturality
+
+- →  direction morphisms for El, c, naturality for El, and rountripping for El→ and c→
+-}
+
+-- Could this be a *lax* weak morphism? I.e. only the → iso direction for every object in the model?
+
+
 open import StrictLib hiding (id; _∘_)
 import Syntax as S
 

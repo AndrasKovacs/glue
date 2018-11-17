@@ -300,3 +300,21 @@ postulate
         {bˢ : S.Tm Γˢ S.Bool}
            (b : Tm Γ Bool bˢ)
     → Tm Γ (P [ id ,s coe ((λ x → Tm Γ x bˢ) & (Bool[] ⁻¹)) b ]T) (S.ite Pˢ tˢ fˢ bˢ)
+
+  ite-true :
+    ∀{i}{Γˢ : S.Con i}                {Γ : Con _ Γˢ}
+     {j}{Pˢ : S.Ty (Γˢ S.▶ S.Bool) j} (P : Ty (Γ ▶ Bool) j Pˢ)
+        {tˢ : S.Tm Γˢ (Pˢ S.[ S.id S.,s S.true ]T)}
+           (t : Tm Γ (P [ id ,s coe ((λ x → Tm Γ x S.true) & (Bool[] ⁻¹)) true ]T) tˢ)
+        {fˢ : S.Tm Γˢ (Pˢ S.[ S.id S.,s S.false ]T)}
+           (f : Tm Γ (P [ id ,s coe ((λ x → Tm Γ x S.false) & (Bool[] ⁻¹)) false ]T) fˢ)
+     → ite P t f true ≡ t
+
+  ite-false :
+    ∀{i}{Γˢ : S.Con i}                {Γ : Con _ Γˢ}
+     {j}{Pˢ : S.Ty (Γˢ S.▶ S.Bool) j} (P : Ty (Γ ▶ Bool) j Pˢ)
+        {tˢ : S.Tm Γˢ (Pˢ S.[ S.id S.,s S.true ]T)}
+           (t : Tm Γ (P [ id ,s coe ((λ x → Tm Γ x S.true) & (Bool[] ⁻¹)) true ]T) tˢ)
+        {fˢ : S.Tm Γˢ (Pˢ S.[ S.id S.,s S.false ]T)}
+           (f : Tm Γ (P [ id ,s coe ((λ x → Tm Γ x S.false) & (Bool[] ⁻¹)) false ]T) fˢ)
+     → ite P t f false ≡ f

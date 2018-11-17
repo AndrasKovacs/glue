@@ -729,3 +729,129 @@ postulate
     {Γˢ} {Γ}) {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ} {Γ})} {Bool {i} {Γˢ} {Γ}}
     (Bool[] {i} {Γˢ} {Γ} {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} {id {i} {Γˢ} {Γ}}))) b)))
     (S.ite {i} {Γˢ} {j} Pˢ tˢ fˢ bˢ)
+
+  ite-true :
+    {i : Level} {Γˢ : S.Con i} {Γ : Con i Γˢ} {j : Level} {Pˢ : S.Ty {i} (S._▶_ {i}
+    Γˢ {zero} (S.Bool {i} {Γˢ})) j} (P : Ty {i} {S._▶_ {i} Γˢ {zero} (S.Bool {i}
+    {Γˢ})} (_▶_ {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ})) j Pˢ) {tˢ :
+    S.Tm {i} Γˢ {j} (S._[_]T {i} {S._▶_ {i} Γˢ {zero} (S.Bool {i} {Γˢ})} {j} Pˢ {i}
+    {Γˢ} (S._,s_ {i} {Γˢ} {i} {Γˢ} (S.id {i} {Γˢ}) {zero} {S.Bool {i} {Γˢ}} (S.true
+    {i} {Γˢ})))} (t : Tm {i} {Γˢ} Γ {j} {S._[_]T {i} {S._▶_ {i} Γˢ {zero} (S.Bool
+    {i} {Γˢ})} {j} Pˢ {i} {Γˢ} (S._,s_ {i} {Γˢ} {i} {Γˢ} (S.id {i} {Γˢ}) {zero}
+    {S.Bool {i} {Γˢ}} (S.true {i} {Γˢ}))} (_[_]T {i} {S._▶_ {i} Γˢ {zero} (S.Bool
+    {i} {Γˢ})} {_▶_ {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ})} {j}
+    {Pˢ} P {i} {Γˢ} {Γ} {S._,s_ {i} {Γˢ} {i} {Γˢ} (S.id {i} {Γˢ}) {zero} {S.Bool {i}
+    {Γˢ}} (S.true {i} {Γˢ})} (_,s_ {i} {Γˢ} {Γ} {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i}
+    {Γˢ} {Γ}) {zero} {S.Bool {i} {Γˢ}} {Bool {i} {Γˢ} {Γ}} {S.true {i} {Γˢ}} (coe
+    {i} {Tm {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ}) (S.true {i}
+    {Γˢ})} {Tm {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} (_[_]T {i} {Γˢ} {Γ} {zero}
+    {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ}) {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ}
+    {Γ})) (S.true {i} {Γˢ})} (_&_ {suc zero ⊔ i} {suc i} {Ty {i} {Γˢ} Γ zero (S.Bool
+    {i} {Γˢ})} {Set i} (λ x → Tm {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} x (S.true {i}
+    {Γˢ})) {Bool {i} {Γˢ} {Γ}} {_[_]T {i} {Γˢ} {Γ} {zero} {S.Bool {i} {Γˢ}} (Bool
+    {i} {Γˢ} {Γ}) {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ} {Γ})} (_⁻¹ {suc zero ⊔
+    i} {Ty {i} {Γˢ} Γ zero (S.Bool {i} {Γˢ})} {_[_]T {i} {Γˢ} {Γ} {zero} {S.Bool {i}
+    {Γˢ}} (Bool {i} {Γˢ} {Γ}) {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ} {Γ})} {Bool
+    {i} {Γˢ} {Γ}} (Bool[] {i} {Γˢ} {Γ} {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} {id {i} {Γˢ}
+    {Γ}}))) (true {i} {Γˢ} {Γ})))) tˢ) {fˢ : S.Tm {i} Γˢ {j} (S._[_]T {i} {S._▶_ {i}
+    Γˢ {zero} (S.Bool {i} {Γˢ})} {j} Pˢ {i} {Γˢ} (S._,s_ {i} {Γˢ} {i} {Γˢ} (S.id {i}
+    {Γˢ}) {zero} {S.Bool {i} {Γˢ}} (S.false {i} {Γˢ})))} (f : Tm {i} {Γˢ} Γ {j}
+    {S._[_]T {i} {S._▶_ {i} Γˢ {zero} (S.Bool {i} {Γˢ})} {j} Pˢ {i} {Γˢ} (S._,s_ {i}
+    {Γˢ} {i} {Γˢ} (S.id {i} {Γˢ}) {zero} {S.Bool {i} {Γˢ}} (S.false {i} {Γˢ}))}
+    (_[_]T {i} {S._▶_ {i} Γˢ {zero} (S.Bool {i} {Γˢ})} {_▶_ {i} {Γˢ} Γ {zero}
+    {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ})} {j} {Pˢ} P {i} {Γˢ} {Γ} {S._,s_ {i} {Γˢ}
+    {i} {Γˢ} (S.id {i} {Γˢ}) {zero} {S.Bool {i} {Γˢ}} (S.false {i} {Γˢ})} (_,s_ {i}
+    {Γˢ} {Γ} {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ} {Γ}) {zero} {S.Bool {i} {Γˢ}}
+    {Bool {i} {Γˢ} {Γ}} {S.false {i} {Γˢ}} (coe {i} {Tm {i} {Γˢ} Γ {zero} {S.Bool
+    {i} {Γˢ}} (Bool {i} {Γˢ} {Γ}) (S.false {i} {Γˢ})} {Tm {i} {Γˢ} Γ {zero} {S.Bool
+    {i} {Γˢ}} (_[_]T {i} {Γˢ} {Γ} {zero} {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ}) {i}
+    {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ} {Γ})) (S.false {i} {Γˢ})} (_&_ {suc zero ⊔
+    i} {suc i} {Ty {i} {Γˢ} Γ zero (S.Bool {i} {Γˢ})} {Set i} (λ x → Tm {i} {Γˢ} Γ
+    {zero} {S.Bool {i} {Γˢ}} x (S.false {i} {Γˢ})) {Bool {i} {Γˢ} {Γ}} {_[_]T {i}
+    {Γˢ} {Γ} {zero} {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ}) {i} {Γˢ} {Γ} {S.id {i}
+    {Γˢ}} (id {i} {Γˢ} {Γ})} (_⁻¹ {suc zero ⊔ i} {Ty {i} {Γˢ} Γ zero (S.Bool {i}
+    {Γˢ})} {_[_]T {i} {Γˢ} {Γ} {zero} {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ}) {i} {Γˢ}
+    {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ} {Γ})} {Bool {i} {Γˢ} {Γ}} (Bool[] {i} {Γˢ} {Γ}
+    {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} {id {i} {Γˢ} {Γ}}))) (false {i} {Γˢ} {Γ})))) fˢ) →
+    _≡_ {i ⊔ j} {Tm {i} {Γˢ} Γ {j} {S._[_]T {i} {S._▶_ {i} Γˢ {zero} (S.Bool {i}
+    {Γˢ})} {j} Pˢ {i} {Γˢ} (S._,s_ {i} {Γˢ} {i} {Γˢ} (S.id {i} {Γˢ}) {zero} {S.Bool
+    {i} {Γˢ}} (S.true {i} {Γˢ}))} (_[_]T {i} {S._▶_ {i} Γˢ {zero} (S.Bool {i} {Γˢ})}
+    {_▶_ {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ})} {j} {Pˢ} P {i}
+    {Γˢ} {Γ} {S._,s_ {i} {Γˢ} {i} {Γˢ} (S.id {i} {Γˢ}) {zero} {S.Bool {i} {Γˢ}}
+    (S.true {i} {Γˢ})} (_,s_ {i} {Γˢ} {Γ} {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ}
+    {Γ}) {zero} {S.Bool {i} {Γˢ}} {Bool {i} {Γˢ} {Γ}} {S.true {i} {Γˢ}} (coe {i} {Tm
+    {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ}) (S.true {i} {Γˢ})} {Tm
+    {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} (_[_]T {i} {Γˢ} {Γ} {zero} {S.Bool {i} {Γˢ}}
+    (Bool {i} {Γˢ} {Γ}) {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ} {Γ})) (S.true {i}
+    {Γˢ})} (_&_ {suc zero ⊔ i} {suc i} {Ty {i} {Γˢ} Γ zero (S.Bool {i} {Γˢ})} {Set
+    i} (λ x → Tm {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} x (S.true {i} {Γˢ})) {Bool {i}
+    {Γˢ} {Γ}} {_[_]T {i} {Γˢ} {Γ} {zero} {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ}) {i}
+    {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ} {Γ})} (_⁻¹ {suc zero ⊔ i} {Ty {i} {Γˢ} Γ
+    zero (S.Bool {i} {Γˢ})} {_[_]T {i} {Γˢ} {Γ} {zero} {S.Bool {i} {Γˢ}} (Bool {i}
+    {Γˢ} {Γ}) {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ} {Γ})} {Bool {i} {Γˢ} {Γ}}
+    (Bool[] {i} {Γˢ} {Γ} {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} {id {i} {Γˢ} {Γ}}))) (true {i}
+    {Γˢ} {Γ})))) tˢ} (ite {i} {Γˢ} {Γ} {j} {Pˢ} P {tˢ} t {fˢ} f {S.true {i} {Γˢ}}
+    (true {i} {Γˢ} {Γ})) t
+
+  ite-false :
+    {i : Level} {Γˢ : S.Con i} {Γ : Con i Γˢ} {j : Level} {Pˢ : S.Ty {i} (S._▶_ {i}
+    Γˢ {zero} (S.Bool {i} {Γˢ})) j} (P : Ty {i} {S._▶_ {i} Γˢ {zero} (S.Bool {i}
+    {Γˢ})} (_▶_ {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ})) j Pˢ) {tˢ :
+    S.Tm {i} Γˢ {j} (S._[_]T {i} {S._▶_ {i} Γˢ {zero} (S.Bool {i} {Γˢ})} {j} Pˢ {i}
+    {Γˢ} (S._,s_ {i} {Γˢ} {i} {Γˢ} (S.id {i} {Γˢ}) {zero} {S.Bool {i} {Γˢ}} (S.true
+    {i} {Γˢ})))} (t : Tm {i} {Γˢ} Γ {j} {S._[_]T {i} {S._▶_ {i} Γˢ {zero} (S.Bool
+    {i} {Γˢ})} {j} Pˢ {i} {Γˢ} (S._,s_ {i} {Γˢ} {i} {Γˢ} (S.id {i} {Γˢ}) {zero}
+    {S.Bool {i} {Γˢ}} (S.true {i} {Γˢ}))} (_[_]T {i} {S._▶_ {i} Γˢ {zero} (S.Bool
+    {i} {Γˢ})} {_▶_ {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ})} {j}
+    {Pˢ} P {i} {Γˢ} {Γ} {S._,s_ {i} {Γˢ} {i} {Γˢ} (S.id {i} {Γˢ}) {zero} {S.Bool {i}
+    {Γˢ}} (S.true {i} {Γˢ})} (_,s_ {i} {Γˢ} {Γ} {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i}
+    {Γˢ} {Γ}) {zero} {S.Bool {i} {Γˢ}} {Bool {i} {Γˢ} {Γ}} {S.true {i} {Γˢ}} (coe
+    {i} {Tm {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ}) (S.true {i}
+    {Γˢ})} {Tm {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} (_[_]T {i} {Γˢ} {Γ} {zero}
+    {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ}) {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ}
+    {Γ})) (S.true {i} {Γˢ})} (_&_ {suc zero ⊔ i} {suc i} {Ty {i} {Γˢ} Γ zero (S.Bool
+    {i} {Γˢ})} {Set i} (λ x → Tm {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} x (S.true {i}
+    {Γˢ})) {Bool {i} {Γˢ} {Γ}} {_[_]T {i} {Γˢ} {Γ} {zero} {S.Bool {i} {Γˢ}} (Bool
+    {i} {Γˢ} {Γ}) {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ} {Γ})} (_⁻¹ {suc zero ⊔
+    i} {Ty {i} {Γˢ} Γ zero (S.Bool {i} {Γˢ})} {_[_]T {i} {Γˢ} {Γ} {zero} {S.Bool {i}
+    {Γˢ}} (Bool {i} {Γˢ} {Γ}) {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ} {Γ})} {Bool
+    {i} {Γˢ} {Γ}} (Bool[] {i} {Γˢ} {Γ} {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} {id {i} {Γˢ}
+    {Γ}}))) (true {i} {Γˢ} {Γ})))) tˢ) {fˢ : S.Tm {i} Γˢ {j} (S._[_]T {i} {S._▶_ {i}
+    Γˢ {zero} (S.Bool {i} {Γˢ})} {j} Pˢ {i} {Γˢ} (S._,s_ {i} {Γˢ} {i} {Γˢ} (S.id {i}
+    {Γˢ}) {zero} {S.Bool {i} {Γˢ}} (S.false {i} {Γˢ})))} (f : Tm {i} {Γˢ} Γ {j}
+    {S._[_]T {i} {S._▶_ {i} Γˢ {zero} (S.Bool {i} {Γˢ})} {j} Pˢ {i} {Γˢ} (S._,s_ {i}
+    {Γˢ} {i} {Γˢ} (S.id {i} {Γˢ}) {zero} {S.Bool {i} {Γˢ}} (S.false {i} {Γˢ}))}
+    (_[_]T {i} {S._▶_ {i} Γˢ {zero} (S.Bool {i} {Γˢ})} {_▶_ {i} {Γˢ} Γ {zero}
+    {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ})} {j} {Pˢ} P {i} {Γˢ} {Γ} {S._,s_ {i} {Γˢ}
+    {i} {Γˢ} (S.id {i} {Γˢ}) {zero} {S.Bool {i} {Γˢ}} (S.false {i} {Γˢ})} (_,s_ {i}
+    {Γˢ} {Γ} {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ} {Γ}) {zero} {S.Bool {i} {Γˢ}}
+    {Bool {i} {Γˢ} {Γ}} {S.false {i} {Γˢ}} (coe {i} {Tm {i} {Γˢ} Γ {zero} {S.Bool
+    {i} {Γˢ}} (Bool {i} {Γˢ} {Γ}) (S.false {i} {Γˢ})} {Tm {i} {Γˢ} Γ {zero} {S.Bool
+    {i} {Γˢ}} (_[_]T {i} {Γˢ} {Γ} {zero} {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ}) {i}
+    {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ} {Γ})) (S.false {i} {Γˢ})} (_&_ {suc zero ⊔
+    i} {suc i} {Ty {i} {Γˢ} Γ zero (S.Bool {i} {Γˢ})} {Set i} (λ x → Tm {i} {Γˢ} Γ
+    {zero} {S.Bool {i} {Γˢ}} x (S.false {i} {Γˢ})) {Bool {i} {Γˢ} {Γ}} {_[_]T {i}
+    {Γˢ} {Γ} {zero} {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ}) {i} {Γˢ} {Γ} {S.id {i}
+    {Γˢ}} (id {i} {Γˢ} {Γ})} (_⁻¹ {suc zero ⊔ i} {Ty {i} {Γˢ} Γ zero (S.Bool {i}
+    {Γˢ})} {_[_]T {i} {Γˢ} {Γ} {zero} {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ}) {i} {Γˢ}
+    {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ} {Γ})} {Bool {i} {Γˢ} {Γ}} (Bool[] {i} {Γˢ} {Γ}
+    {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} {id {i} {Γˢ} {Γ}}))) (false {i} {Γˢ} {Γ})))) fˢ) →
+    _≡_ {i ⊔ j} {Tm {i} {Γˢ} Γ {j} {S._[_]T {i} {S._▶_ {i} Γˢ {zero} (S.Bool {i}
+    {Γˢ})} {j} Pˢ {i} {Γˢ} (S._,s_ {i} {Γˢ} {i} {Γˢ} (S.id {i} {Γˢ}) {zero} {S.Bool
+    {i} {Γˢ}} (S.false {i} {Γˢ}))} (_[_]T {i} {S._▶_ {i} Γˢ {zero} (S.Bool {i}
+    {Γˢ})} {_▶_ {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ})} {j} {Pˢ} P
+    {i} {Γˢ} {Γ} {S._,s_ {i} {Γˢ} {i} {Γˢ} (S.id {i} {Γˢ}) {zero} {S.Bool {i} {Γˢ}}
+    (S.false {i} {Γˢ})} (_,s_ {i} {Γˢ} {Γ} {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ}
+    {Γ}) {zero} {S.Bool {i} {Γˢ}} {Bool {i} {Γˢ} {Γ}} {S.false {i} {Γˢ}} (coe {i}
+    {Tm {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} (Bool {i} {Γˢ} {Γ}) (S.false {i} {Γˢ})}
+    {Tm {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} (_[_]T {i} {Γˢ} {Γ} {zero} {S.Bool {i}
+    {Γˢ}} (Bool {i} {Γˢ} {Γ}) {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ} {Γ}))
+    (S.false {i} {Γˢ})} (_&_ {suc zero ⊔ i} {suc i} {Ty {i} {Γˢ} Γ zero (S.Bool {i}
+    {Γˢ})} {Set i} (λ x → Tm {i} {Γˢ} Γ {zero} {S.Bool {i} {Γˢ}} x (S.false {i}
+    {Γˢ})) {Bool {i} {Γˢ} {Γ}} {_[_]T {i} {Γˢ} {Γ} {zero} {S.Bool {i} {Γˢ}} (Bool
+    {i} {Γˢ} {Γ}) {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ} {Γ})} (_⁻¹ {suc zero ⊔
+    i} {Ty {i} {Γˢ} Γ zero (S.Bool {i} {Γˢ})} {_[_]T {i} {Γˢ} {Γ} {zero} {S.Bool {i}
+    {Γˢ}} (Bool {i} {Γˢ} {Γ}) {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} (id {i} {Γˢ} {Γ})} {Bool
+    {i} {Γˢ} {Γ}} (Bool[] {i} {Γˢ} {Γ} {i} {Γˢ} {Γ} {S.id {i} {Γˢ}} {id {i} {Γˢ}
+    {Γ}}))) (false {i} {Γˢ} {Γ})))) fˢ} (ite {i} {Γˢ} {Γ} {j} {Pˢ} P {tˢ} t {fˢ} f
+    {S.false {i} {Γˢ}} (false {i} {Γˢ} {Γ})) f

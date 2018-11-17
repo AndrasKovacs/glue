@@ -4,7 +4,6 @@ module Canonicity.Pi where
 
 open import StrictLib hiding (id; _∘_)
 open import Canonicity.CwF
-open import Canonicity.ElU
 import Syntax as S
 
 Π :

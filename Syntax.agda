@@ -120,10 +120,12 @@ postulate
   false   : ∀{i}{Γ : Con i} → Tm Γ Bool
   false[] : ∀{i}{Γ : Con i}{j}{Δ : Con j}{σ : Sub Γ Δ} → false [ σ ]t ≡ tr (Tm Γ) (Bool[] ⁻¹) false
 
-  ite     : ∀{i}{Γ : Con i}{j}(P : Ty (Γ ▶ Bool) j)
-            → Tm Γ (P [ (id ,s tr (Tm Γ) (Bool[] ⁻¹) true) ]T)
-            → Tm Γ (P [ (id ,s tr (Tm Γ) (Bool[] ⁻¹) false) ]T)
-            → (t : Tm Γ Bool) → Tm Γ (P [ (id ,s tr (Tm Γ) (Bool[] ⁻¹) t) ]T)
+  ite :
+    ∀{i}{Γ : Con i}{j}(P : Ty (Γ ▶ Bool) j)
+        → Tm Γ (P [ (id ,s tr (Tm Γ) (Bool[] ⁻¹) true) ]T)
+        → Tm Γ (P [ (id ,s tr (Tm Γ) (Bool[] ⁻¹) false) ]T)
+        → (t : Tm Γ Bool)
+        → Tm Γ (P [ (id ,s tr (Tm Γ) (Bool[] ⁻¹) t) ]T)
 
   -- -- ugly
   -- ite[]   : ∀{i}{Γ : Con i}{j}{Δ : Con j}{σ : Sub Γ Δ}
@@ -133,11 +135,24 @@ postulate
   --           → (b  : Tm Δ Bool)
   --           → coe {!!} (ite P tᴹ fᴹ b [ σ ]t) ≡ ite (coe {!(λ x → Ty (Γ ▶ x)) & ?!} (P [ σ ^ Bool ]T)) {!!} {!!} {!!}
 
+  ite-true :
+    ∀{i}{Γ : Con i}{j}(P : Ty (Γ ▶ Bool) j)
+        → (t : Tm Γ (P [ (id ,s tr (Tm Γ) (Bool[] ⁻¹) true) ]T))
+        → (f : Tm Γ (P [ (id ,s tr (Tm Γ) (Bool[] ⁻¹) false) ]T))
+        → ite P t f true ≡ t
+
+  ite-false :
+    ∀{i}{Γ : Con i}{j}(P : Ty (Γ ▶ Bool) j)
+        → (t : Tm Γ (P [ (id ,s tr (Tm Γ) (Bool[] ⁻¹) true) ]T))
+        → (f : Tm Γ (P [ (id ,s tr (Tm Γ) (Bool[] ⁻¹) false) ]T))
+        → ite P t f false ≡ f
+
 
 -- Rewriting
 --------------------------------------------------------------------------------
 
 {-# REWRITE [id]T [∘]T idl idr ass ▶β₁ ▶η ,∘ Π[] Πβ Πη U[] El[] Elc cEl Bool[] true[] false[] #-}
+{-# REWRITE ite-true ite-false #-}
 
 postulate
   [∘]Tr :
