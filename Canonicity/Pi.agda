@@ -66,5 +66,29 @@ app :
 app {i} {Γˢ} {Γ} {j} {Aˢ} {A} {k} {Bˢ} {B} {tˢ} t ν νᴾ =
   let t* , q , r = t (S.π₁ ν) (₁ νᴾ)
   in tr (B ν νᴾ)
-        {!((λ x → S.app x S.[ S.id S.,s S.π₂ ν ]t) & q ⁻¹)!} -- OK, REWRITE issue
+        cheat    -- OK
         (r (S.π₂ ν) (₂ νᴾ))
+
+Πβ :
+   {i : Level} {Γˢ : S.Con i} {Γ : Con i Γˢ} {j : Level} {Aˢ : S.Ty {i} Γˢ j} {A :
+   Ty {i} {Γˢ} Γ j Aˢ} {k : Level} {Bˢ : S.Ty {i ⊔ j} (S._▶_ {i} Γˢ {j} Aˢ) k} {B :
+   Ty {i ⊔ j} {S._▶_ {i} Γˢ {j} Aˢ} (_▶_ {i} {Γˢ} Γ {j} {Aˢ} A) k Bˢ} {tˢ : S.Tm {i
+   ⊔ j} (S._▶_ {i} Γˢ {j} Aˢ) {k} Bˢ} {t : Tm {i ⊔ j} {S._▶_ {i} Γˢ {j} Aˢ} (_▶_
+   {i} {Γˢ} Γ {j} {Aˢ} A) {k} {Bˢ} B tˢ} → _≡_ {i ⊔ (j ⊔ k)} {Tm {i ⊔ j} {S._▶_ {i}
+   Γˢ {j} Aˢ} (_▶_ {i} {Γˢ} Γ {j} {Aˢ} A) {k} {Bˢ} B tˢ} (app {i} {Γˢ} {Γ} {j} {Aˢ}
+   {A} {k} {Bˢ} {B} {S.lam {i} {Γˢ} {j} {Aˢ} {k} {Bˢ} tˢ} (lam {i} {Γˢ} {Γ} {j}
+   {Aˢ} {A} {k} {Bˢ} {B} {tˢ} t)) t
+Πβ {i} {Γˢ} {Γ} {j} {Aˢ} {A} {k} {Bˢ} {B} {tˢ} {t} = {!!} -- OK
+
+
+Πη :
+   {i : Level} {Γˢ : S.Con i} {Γ : Con i Γˢ} {j : Level} {Aˢ : S.Ty {i} Γˢ j} {A :
+   Ty {i} {Γˢ} Γ j Aˢ} {k : Level} {Bˢ : S.Ty {i ⊔ j} (S._▶_ {i} Γˢ {j} Aˢ) k} {B :
+   Ty {i ⊔ j} {S._▶_ {i} Γˢ {j} Aˢ} (_▶_ {i} {Γˢ} Γ {j} {Aˢ} A) k Bˢ} {tˢ : S.Tm
+   {i} Γˢ {j ⊔ k} (S.Π {i} {Γˢ} {j} Aˢ {k} Bˢ)} {t : Tm {i} {Γˢ} Γ {j ⊔ k} {S.Π {i}
+   {Γˢ} {j} Aˢ {k} Bˢ} (Π {i} {Γˢ} {Γ} {j} {Aˢ} A {k} {Bˢ} B) tˢ} → _≡_ {i ⊔ (j ⊔
+   k)} {Tm {i} {Γˢ} Γ {j ⊔ k} {S.Π {i} {Γˢ} {j} Aˢ {k} Bˢ} (Π {i} {Γˢ} {Γ} {j} {Aˢ}
+   A {k} {Bˢ} B) tˢ} (lam {i} {Γˢ} {Γ} {j} {Aˢ} {A} {k} {Bˢ} {B} {S.app {i} {Γˢ}
+   {j} {Aˢ} {k} {Bˢ} tˢ} (app {i} {Γˢ} {Γ} {j} {Aˢ} {A} {k} {Bˢ} {B} {tˢ} t)) t
+Πη {i} {Γˢ} {Γ} {j} {Aˢ} {A} {k} {Bˢ} {B} {tˢ} {t} =
+  ext λ ν → ext λ νᴾ → {!t ν νᴾ!}   -- OK

@@ -1,10 +1,10 @@
 
 {-# OPTIONS --rewriting #-}
 
-module GluedPi where
+module Glued.Pi where
 
 open import StrictLib hiding (id; _∘_)
-open import GluedCwF
+open import Glued.CwF
 import Syntax as S
 import WeakMorphism as F
 

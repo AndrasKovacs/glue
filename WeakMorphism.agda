@@ -96,21 +96,81 @@ postulate
   app   : ∀{i}{Γˢ : S.Con i}{j}{Aˢ : S.Ty Γˢ j}{k}{Bˢ : S.Ty (Γˢ S.▶ Aˢ) k}(tˢ : S.Tm Γˢ (S.Π Aˢ Bˢ))
           → Tm (S.app tˢ) ≡ (λ Γ → Π→ _ Aˢ Bˢ (Tm tˢ (▶→ Γ .₁)) (▶→ Γ .₂))
 
-  U→    : ∀{i}{Γˢ : S.Con i}{j : Level}{Γ} → Ty (S.U {i}{Γˢ} j) Γ → Set j
+  U→    : ∀{i}{Γˢ : S.Con i}{j : Level} Γ → Ty (S.U {i}{Γˢ} j) Γ → Set j
 {-# REWRITE lam app #-}
 
+--------------------------------------------------------------------------------
 postulate
-  El→   : ∀{i}{Γˢ : S.Con i}{j}(aˢ : S.Tm Γˢ (S.U j)) Γ → Ty (S.El aˢ) Γ → U→ (Tm aˢ Γ)
-  c→    : ∀{i}{Γˢ : S.Con i}{j}(Aˢ : S.Ty Γˢ j) Γ → U→ (Tm (S.c Aˢ) Γ) → Ty Aˢ Γ
-  -- Elc→  : ∀{i}{Γˢ : S.Con i}{j} aˢ (Aˢ : S.Ty Γˢ j) Γ x → El→ aˢ Γ (c→ (S.El aˢ) Γ x) ≡ x
-  cEl→
+  TyU[] :
+    (i  : Level)
+    (Γˢ : S.Con i)
+    (j  : Level)
+    (Δˢ : S.Con j)
+    (σˢ : S.Sub Γˢ Δˢ)
+    (k  : Level)
+    (Γᶠ : Con Γˢ)
+    → Ty (S.U k) (Sub σˢ Γᶠ) ≡ Ty (S.U k) Γᶠ
+{-# REWRITE TyU[] #-}
+
+postulate
+  TyEl[] :
+     (i  : Level)
+     (Γˢ : S.Con i)
+     (j  : Level)
+     (Δˢ : S.Con j)
+     (σˢ : S.Sub Γˢ Δˢ)
+     (k  : Level)
+     (aˢ : S.Tm Δˢ (S.U k))
+     (Γᶠ : Con Γˢ)
+     → Ty (S.El (aˢ S.[ σˢ ]t)) Γᶠ ≡ Ty (S.El aˢ) (Sub σˢ Γᶠ)
+{-# REWRITE TyEl[] #-}
+
+--------------------------------------------------------------------------------
+
+postulate
+  U→nat :
+    (i  : Level)
+    (Γˢ : S.Con i)
+    (j  : Level)
+    (Δˢ : S.Con j)
+    (σˢ : S.Sub Γˢ Δˢ)
+    (k  : Level)
+    (Γᶠ : Con Γˢ)
+    (Aᶠ : Ty (S.U k) Γᶠ)
+    → U→ {j} {Δˢ} {k} (Sub {i} {Γˢ} {j} {Δˢ} σˢ Γᶠ) Aᶠ ≡  U→ {i} {Γˢ} {k} Γᶠ Aᶠ
+{-# REWRITE U→nat #-}
+
+postulate
+  El→   : ∀{i}{Γˢ : S.Con i}{j}(aˢ : S.Tm Γˢ (S.U j)) Γ → Ty (S.El aˢ) Γ → U→ Γ (Tm aˢ Γ)
+
+  c→    : ∀{i}{Γˢ : S.Con i}{j}(Aˢ : S.Ty Γˢ j) Γ → U→ Γ (Tm (S.c Aˢ) Γ) → Ty Aˢ Γ
+
+  Elc→ :
+     {i  : Level}
+     (Γˢ : S.Con i)
+     (Γ  : Con Γˢ)
+     {j  : Level}
+     (aˢ : S.Tm Γˢ (S.U j))
+     (Γᶠ : Con Γˢ)
+     (Aᶠ : U→ Γᶠ (Tm aˢ Γᶠ))
+     → El→ aˢ Γᶠ (c→ (S.El aˢ) Γᶠ Aᶠ) ≡ Aᶠ
+
+  cEl→ :
+     {i  : Level}
+     (Γˢ : S.Con i)
+     {j  : Level}
+     (Aˢ : S.Ty Γˢ j)
+     (Γᶠ : Con Γˢ)
+     (Aᶠ : Ty Aˢ Γᶠ)
+     → c→ Aˢ Γᶠ (El→ (S.c Aˢ) Γᶠ Aᶠ) ≡ Aᶠ
+{-# REWRITE Elc→ cEl→ #-}
 
 
 -- rewrite specializations
 --------------------------------------------------------------------------------
 
 postulate
-  spec2 :
+  Tmπ₂ :
    (i  : Level)
    (Γˢ : S.Con i)
    (Γ  : Con Γˢ → Set i)
@@ -124,4 +184,4 @@ postulate
    (A  : (Γᶠ₁ : Con Δˢ) → Δ Γᶠ₁ → Ty Aˢ Γᶠ₁ → Set k)
    (Γᶠ : Con (Γˢ S.▶ Aˢ S.[ σˢ ]T))
    → Tm (S.π₂ S.id) Γᶠ ≡ ₂ (▶→ Γᶠ)
-{-# REWRITE spec2 #-}
+{-# REWRITE Tmπ₂ #-}

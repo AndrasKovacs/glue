@@ -113,11 +113,31 @@ postulate
 
   cEl : ∀{i}{Γ : Con i}{j}{a : Tm Γ (U j)} → c (El a) ≡ a
 
+  Bool    : ∀{i}{Γ : Con i} → Ty Γ zero
+  Bool[]  : ∀{i}{Γ : Con i}{j}{Δ : Con j}{σ : Sub Γ Δ} → Bool [ σ ]T ≡ Bool
+  true    : ∀{i}{Γ : Con i} → Tm Γ Bool
+  true[]  : ∀{i}{Γ : Con i}{j}{Δ : Con j}{σ : Sub Γ Δ} → true [ σ ]t ≡ tr (Tm Γ) (Bool[] ⁻¹) true
+  false   : ∀{i}{Γ : Con i} → Tm Γ Bool
+  false[] : ∀{i}{Γ : Con i}{j}{Δ : Con j}{σ : Sub Γ Δ} → false [ σ ]t ≡ tr (Tm Γ) (Bool[] ⁻¹) false
+
+  ite     : ∀{i}{Γ : Con i}{j}(P : Ty (Γ ▶ Bool) j)
+            → Tm Γ (P [ (id ,s tr (Tm Γ) (Bool[] ⁻¹) true) ]T)
+            → Tm Γ (P [ (id ,s tr (Tm Γ) (Bool[] ⁻¹) false) ]T)
+            → (t : Tm Γ Bool) → Tm Γ (P [ (id ,s tr (Tm Γ) (Bool[] ⁻¹) t) ]T)
+
+  -- -- ugly
+  -- ite[]   : ∀{i}{Γ : Con i}{j}{Δ : Con j}{σ : Sub Γ Δ}
+  --           → (P  : Ty (Δ ▶ Bool) j)
+  --           → (tᴹ : Tm Δ (P [ (id ,s tr (Tm Δ) (Bool[] ⁻¹) true) ]T))
+  --           → (fᴹ : Tm Δ (P [ (id ,s tr (Tm Δ) (Bool[] ⁻¹) false) ]T))
+  --           → (b  : Tm Δ Bool)
+  --           → coe {!!} (ite P tᴹ fᴹ b [ σ ]t) ≡ ite (coe {!(λ x → Ty (Γ ▶ x)) & ?!} (P [ σ ^ Bool ]T)) {!!} {!!} {!!}
+
 
 -- Rewriting
 --------------------------------------------------------------------------------
 
-{-# REWRITE [id]T [∘]T idl idr ass ▶β₁ ▶η ,∘ Π[] Πβ Πη U[] El[] Elc cEl #-}
+{-# REWRITE [id]T [∘]T idl idr ass ▶β₁ ▶η ,∘ Π[] Πβ Πη U[] El[] Elc cEl Bool[] true[] false[] #-}
 
 postulate
   [∘]Tr :
@@ -134,7 +154,10 @@ postulate
     ∀{i}{Γ : Con i}{j}{A : Ty Γ j}{k}{B : Ty (Γ ▶ A) k}{l}{θ : Con l}{σ : Sub θ Γ}
     → Π[]{i}{Γ}{j}{A}{k}{B}{l}{θ}{σ} ≡ refl
 
-{-# REWRITE [∘]Tr U[]r El[]r Π[]r #-}
+  Bool[]r : ∀{i}{Γ : Con i}{j}{Δ : Con j}{σ : Sub Γ Δ}
+    → Bool[] {i}{Γ}{j}{Δ}{σ} ≡ refl
+
+{-# REWRITE [∘]Tr U[]r El[]r Π[]r Bool[]r #-}
 
 postulate
   app[]' :

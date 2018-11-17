@@ -1,6 +1,6 @@
 {-# OPTIONS --rewriting #-}
 
-module GluedCwF where
+module Glued.CwF where
 
 open import StrictLib hiding (id; _∘_)
 import Syntax as S
