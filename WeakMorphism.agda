@@ -3,22 +3,24 @@
 module WeakMorphism where
 
 {-
-Tentatively on what's actually needed for canonicity and glued:
+The notion of weak morphism already needs:
+  - Π←, because otherwise we can't type lam
+  - ▶-iso, except ▶p
 
-- Iso for comprehension, *without* naturality or roundtrips (todo: check)
+Glued needs:
+  - preservation of ▶, ∙ up to iso
+  - Π natural iso except Πq, lam, app
 
-- → direction for U with naturality
-
-- → direction for Π with naturality
-
-- →  direction morphisms for El, c, naturality for El, and rountripping for El→ and c→
+GlobalSection:
+  - Π← does not work at. Thus, global section can't be a weak morphism!
+  - El is strict
+  - Only Bool← for Bool.
 -}
-
--- Could this be a *lax* weak morphism? I.e. only the → iso direction for every object in the model?
 
 
 open import StrictLib hiding (id; _∘_)
 import Syntax as S
+open import Data.Bool renaming (Bool to 𝔹; true to 𝕋; false to 𝔽)
 
 postulate
   Con   : ∀ {i} → S.Con i → Set i
@@ -38,12 +40,6 @@ postulate
 {-# REWRITE ▶p ▶q #-}
 
 postulate
-  -- ▶→nat : ∀ {i}{Γˢ : S.Con i}{j}{Aˢ : S.Ty Γˢ j}
-  --           {k}{Δˢ : S.Con k}{l}{Bˢ : S.Ty Δˢ l}
-  --           {σˢ : S.Sub Γˢ Δˢ}{tˢ : S.Tm (Γˢ S.▶ Aˢ) (Bˢ S.[ σˢ S.∘ S.wk ]T)}
-  --           (ΓA : Con (Γˢ S.▶ Aˢ))
-  --         → (▶→ {Γˢ = Δˢ}{Aˢ = Bˢ} (Sub (σˢ S.∘ (S.wk {A = Aˢ}) S.,s tˢ) ΓA))
-  --         ≡ (let Γ , A = (▶→ {Γˢ = Γˢ}{Aˢ = Aˢ} ΓA) in (Sub σˢ Γ) , {! Tm tˢ (▶← (Γ , A))!})
 
   []T   : ∀ {i}{Γˢ : S.Con i}{j}{Δˢ : S.Con j}{k}{Aˢ : S.Ty Δˢ k}{σˢ : S.Sub Γˢ Δˢ}
           → Ty (Aˢ S.[ σˢ ]T) ≡ (λ Γ → Ty Aˢ (Sub σˢ Γ))
@@ -63,6 +59,24 @@ postulate
 postulate
   π₂    : ∀{i}{Γˢ : S.Con i}{j}{Δˢ : S.Con j}{k}{Aˢ : S.Ty Δˢ k}(σˢ : S.Sub Γˢ (Δˢ S.▶ Aˢ))
           → Tm (S.π₂ σˢ) ≡ (λ Γ → ₂ (▶→ (Sub σˢ Γ)))
+
+--spec--------------------------------------------------------------------------
+  Tmπ₂ :
+   (i  : Level)
+   (Γˢ : S.Con i)
+   (Γ  : Con Γˢ → Set i)
+   (j  : Level)
+   (Δˢ : S.Con j)
+   (Δ  : Con Δˢ → Set j)
+   (σˢ : S.Sub Γˢ Δˢ)
+   (σ  : (Γᶠ₁ : Con Γˢ) → Γ Γᶠ₁ → Δ (Sub σˢ Γᶠ₁))
+   (k  : Level)
+   (Aˢ : S.Ty Δˢ k)
+   (A  : (Γᶠ₁ : Con Δˢ) → Δ Γᶠ₁ → Ty Aˢ Γᶠ₁ → Set k)
+   (Γᶠ : Con (Γˢ S.▶ Aˢ S.[ σˢ ]T))
+   → Tm (S.π₂ S.id) Γᶠ ≡ ₂ (▶→ Γᶠ)
+--------------------------------------------------------------------------------
+
   []t   : ∀{i}{Δˢ : S.Con i}{j}{A : S.Ty Δˢ j}(tˢ : S.Tm Δˢ A){k}{Γˢ : S.Con k}(σˢ : S.Sub Γˢ Δˢ)
           → Tm (tˢ S.[ σˢ ]t) ≡ (λ Γ → Tm tˢ (Sub σˢ Γ))
 
@@ -75,19 +89,8 @@ postulate
 
   Π←    : ∀{i}{Γˢ : S.Con i}{j} Γ (Aˢ : S.Ty Γˢ j){k}(Bˢ : S.Ty (Γˢ S.▶ Aˢ) k)
           → ((A : Ty Aˢ Γ) → Ty Bˢ (▶← (Γ , A))) → Ty (S.Π Aˢ Bˢ) Γ
-{-# REWRITE π₂ []t #-}
+{-# REWRITE π₂ []t Tmπ₂ #-}
 
--- spec
---------------------------------------------------------------------------------
-
-postulate
-  spec1 :
-     ∀ {i}{Γˢ : S.Con i}{j}{Δˢ : S.Con j}{k}{Aˢ : S.Ty Δˢ k}{σˢ : S.Sub Γˢ Δˢ}{l}{Γˢ}{σˢ : S.Sub {l} Γˢ Δˢ}
-       {m}{Bˢ : S.Ty (Δˢ S.▶ Aˢ) m}
-       → Ty (S.Π (Aˢ S.[ σˢ ]T) (Bˢ S.[ σˢ S.^ Aˢ ]T)) ≡ λ Γ → Ty (S.Π Aˢ Bˢ) (Sub σˢ Γ)
-{-# REWRITE spec1 #-}
-
---------------------------------------------------------------------------------
 
 postulate
   -- Π→nat : ∀{i}{Δˢ : S.Con i}{j}{Δ : Con Δˢ }(Aˢ : S.Ty Δˢ j){k}(Bˢ : S.Ty (Δˢ S.▶ Aˢ) k){l}{Γˢ}{σˢ : S.Sub {l} Γˢ {i} Δˢ}
@@ -102,7 +105,14 @@ postulate
   Πq    : ∀{i}{Γˢ : S.Con i}{j}{Γ}{Aˢ : S.Ty Γˢ j}{k}{Bˢ : S.Ty (Γˢ S.▶ Aˢ) k}(x : Ty (S.Π Aˢ Bˢ) Γ)
           → Π← _ Aˢ Bˢ (Π→ _ Aˢ Bˢ x) ≡ x
 
-{-# REWRITE Πp Πq #-}
+--spec--------------------------------------------------------------------------
+  TyΠ[] :
+     ∀ {i}{Γˢ : S.Con i}{j}{Δˢ : S.Con j}{k}{Aˢ : S.Ty Δˢ k}{σˢ : S.Sub Γˢ Δˢ}{l}{Γˢ}{σˢ : S.Sub {l} Γˢ Δˢ}
+       {m}{Bˢ : S.Ty (Δˢ S.▶ Aˢ) m}
+       → Ty (S.Π (Aˢ S.[ σˢ ]T) (Bˢ S.[ σˢ S.^ Aˢ ]T)) ≡ λ Γ → Ty (S.Π Aˢ Bˢ) (Sub σˢ Γ)
+--------------------------------------------------------------------------------
+{-# REWRITE Πp Πq TyΠ[] #-}
+
 
 postulate
   lam   : ∀{i}{Γˢ : S.Con i}{j}{Aˢ : S.Ty Γˢ j}{k}{Bˢ : S.Ty (Γˢ S.▶ Aˢ) k}(tˢ : S.Tm (Γˢ S.▶ Aˢ) Bˢ)
@@ -114,7 +124,7 @@ postulate
   U→    : ∀{i}{Γˢ : S.Con i}{j : Level} Γ → Ty (S.U {i}{Γˢ} j) Γ → Set j
 {-# REWRITE lam app #-}
 
---------------------------------------------------------------------------------
+--spec--------------------------------------------------------------------------
 postulate
   TyU[] :
     (i  : Level)
@@ -139,7 +149,6 @@ postulate
      (Γᶠ : Con Γˢ)
      → Ty (S.El (aˢ S.[ σˢ ]t)) Γᶠ ≡ Ty (S.El aˢ) (Sub σˢ Γᶠ)
 {-# REWRITE TyEl[] #-}
-
 --------------------------------------------------------------------------------
 
 postulate
@@ -157,6 +166,7 @@ postulate
 
 postulate
   El→   : ∀{i}{Γˢ : S.Con i}{j}(aˢ : S.Tm Γˢ (S.U j)) Γ → Ty (S.El aˢ) Γ → U→ Γ (Tm aˢ Γ)
+  -- TODO: El→-nat
 
   c→    : ∀{i}{Γˢ : S.Con i}{j}(Aˢ : S.Ty Γˢ j) Γ → U→ Γ (Tm (S.c Aˢ) Γ) → Ty Aˢ Γ
 
@@ -180,23 +190,16 @@ postulate
      → c→ Aˢ Γᶠ (El→ (S.c Aˢ) Γᶠ Aᶠ) ≡ Aᶠ
 {-# REWRITE Elc→ cEl→ #-}
 
+postulate
+  Bool←    : ∀ {i}{Γˢ : S.Con i}(Γ : Con Γˢ) → 𝔹 → Ty S.Bool Γ
 
--- rewrite specializations
+--spec--------------------------------------------------------------------------
+  TyBool[] : ∀ {i}{Γˢ : S.Con i}{j}{Δˢ : S.Con j}{σˢ : S.Sub Γˢ Δˢ}(Γ : Con Γˢ)
+             → Ty S.Bool (Sub σˢ Γ) ≡ Ty S.Bool Γ
 --------------------------------------------------------------------------------
+{-# REWRITE TyBool[] #-}
 
 postulate
-  Tmπ₂ :
-   (i  : Level)
-   (Γˢ : S.Con i)
-   (Γ  : Con Γˢ → Set i)
-   (j  : Level)
-   (Δˢ : S.Con j)
-   (Δ  : Con Δˢ → Set j)
-   (σˢ : S.Sub Γˢ Δˢ)
-   (σ  : (Γᶠ₁ : Con Γˢ) → Γ Γᶠ₁ → Δ (Sub σˢ Γᶠ₁))
-   (k  : Level)
-   (Aˢ : S.Ty Δˢ k)
-   (A  : (Γᶠ₁ : Con Δˢ) → Δ Γᶠ₁ → Ty Aˢ Γᶠ₁ → Set k)
-   (Γᶠ : Con (Γˢ S.▶ Aˢ S.[ σˢ ]T))
-   → Tm (S.π₂ S.id) Γᶠ ≡ ₂ (▶→ Γᶠ)
-{-# REWRITE Tmπ₂ #-}
+  Bool→nat : ∀ {i}{Γˢ : S.Con i}{j}{Δˢ : S.Con j}{σˢ : S.Sub Γˢ Δˢ}(Γ : Con Γˢ) b →
+                Bool← (Sub σˢ Γ) b ≡ Bool← Γ b
+{-# REWRITE Bool→nat #-}

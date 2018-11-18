@@ -3,6 +3,7 @@
 module GlobalSectionMorphism where
 
 open import StrictLib hiding (id; _∘_)
+open import Data.Bool renaming (Bool to 𝔹; true to 𝕋; false to 𝔽)
 import Syntax as S
 
 Con : ∀ {i} → S.Con i → Set i
@@ -70,7 +71,7 @@ id = refl
 
 Π←    : ∀{i}{Γˢ : S.Con i}{j}{Γ}(Aˢ : S.Ty Γˢ j){k}(Bˢ : S.Ty (Γˢ S.▶ Aˢ) k)
         → ((A : Ty Aˢ Γ) → Ty Bˢ (▶← (Γ , A))) → Ty (S.Π Aˢ Bˢ) Γ
-Π← {i} {Γˢ} {j} {Γ} Aˢ {k} Bˢ f = S.lam {!!}  -- doesn't seem possible
+Π← {i} {Γˢ} {j} {Γ} Aˢ {k} Bˢ f = {!!} -- S.lam {!!}  -- doesn't seem possible
 
 --   Πp    : ∀{i}{Γˢ : S.Con i}{j}{Γ}{Aˢ : S.Ty Γˢ j}{k}{Bˢ : S.Ty (Γˢ S.▶ Aˢ) k}(f : ((A : Ty Aˢ Γ) → Ty Bˢ (▶← (Γ , A)))) A
 --           → Π→ Aˢ Bˢ (Π← Aˢ Bˢ f) A ≡ f A
@@ -81,28 +82,42 @@ id = refl
 -- {-# REWRITE π₂ []t Πp Πq #-}
 
 
--- lam   : ∀{i}{Γˢ : S.Con i}{j}{Aˢ : S.Ty Γˢ j}{k}{Bˢ : S.Ty (Γˢ S.▶ Aˢ) k}(tˢ : S.Tm (Γˢ S.▶ Aˢ) Bˢ)
---         → Tm (S.lam tˢ) ≡ (λ Γ → Π← Aˢ Bˢ (λ A → Tm tˢ (▶← (Γ , A))))
--- lam = {!!}
+lam   : ∀{i}{Γˢ : S.Con i}{j}{Aˢ : S.Ty Γˢ j}{k}{Bˢ : S.Ty (Γˢ S.▶ Aˢ) k}(tˢ : S.Tm (Γˢ S.▶ Aˢ) Bˢ)
+        → Tm (S.lam tˢ) ≡ {!Tm  (S.lam tˢ)!} -- λ Γ → S.lam tˢ S.[ Γ ]t -- (λ Γ → Π← Aˢ Bˢ (λ A → Tm tˢ (▶← (Γ , A))))
+lam = {!!}
 
 app   : ∀{i}{Γˢ : S.Con i}{j}{Aˢ : S.Ty Γˢ j}{k}{Bˢ : S.Ty (Γˢ S.▶ Aˢ) k}(tˢ : S.Tm Γˢ (S.Π Aˢ Bˢ))
         → Tm (S.app tˢ) ≡ (λ Γ → Π→ Aˢ Bˢ (Tm tˢ (▶→ Γ .₁)) (▶→ Γ .₂))
-app = {!!}
+app {i} {Γˢ} {j} {Aˢ} {k} {Bˢ} tˢ = ext λ Γ → {!!} -- OK
+
 
 -- Only works if other model is Set (in other cases)
-U→ : ∀{i}{Γˢ : S.Con i}{j : Level} → S.Tm S.∙ (S.U j) → Set j
-U→ {i}{Γˢ}{j} a = S.Tm S.∙ (S.El a)
+U→    : ∀{i}{Γˢ : S.Con i}{j : Level} Γ → Ty (S.U {i}{Γˢ} j) Γ → Set j
+U→ {i} {Γˢ} {j} Γ a = S.Tm S.∙ (S.El a)
 
--- U← : ∀{i}{Γˢ : S.Con i}{j : Level} → Set j → S.Tm S.∙ (S.U j)
--- U← A = {!!}
+-- U← : ∀{i}{Γˢ : S.Con i}{j : Level} Γ → Set j → Ty (S.U {i}{Γˢ} j) Γ
+-- U← {i} {Γˢ} {j} Γ a = {!!}
 
--- U : ∀{i}{Γˢ : S.Con i}{j : Level} → Ty (S.U {i}{Γˢ} j) ≡ (λ Γ → Set j)
--- U {i} {Γˢ} {j} = {!!}
--- {-# REWRITE lam app U #-}
+U→nat :
+  (i  : Level)
+  (Γˢ : S.Con i)
+  (j  : Level)
+  (Δˢ : S.Con j)
+  (σˢ : S.Sub Γˢ Δˢ)
+  (k  : Level)
+  (Γᶠ : Con Γˢ)
+  (Aᶠ : Ty (S.U k) Γᶠ)
+  → U→ {j} {Δˢ} {k} (Sub {i} {Γˢ} {j} {Δˢ} σˢ Γᶠ) Aᶠ ≡  U→ {i} {Γˢ} {k} Γᶠ Aᶠ
+U→nat i Γˢ j Δˢ σˢ k Γᶠ Aᶠ = refl
 
--- postulate
-El : ∀{i}{Γˢ : S.Con i}{j}(aˢ : S.Tm Γˢ (S.U j)) → Ty (S.El aˢ) ≡ {!Tm aˢ!} -- Tm aˢ
-El = {!!}
+-- El, c are strict though...
+El→  : ∀{i}{Γˢ : S.Con i}{j}(aˢ : S.Tm Γˢ (S.U j)) Γ → Ty (S.El aˢ) Γ ≡ U→ Γ (Tm aˢ Γ)
+El→ aˢ Γ = refl
 
---   c     : ∀{i}{Γˢ : S.Con i}{j}(Aˢ : S.Ty Γˢ j) → Tm (S.c Aˢ) ≡ Ty Aˢ
--- {-# REWRITE El c #-}
+c : ∀{i}{Γˢ : S.Con i}{j}(Aˢ : S.Ty Γˢ j) Γ → U→ Γ (Tm (S.c Aˢ) Γ) ≡ Ty Aˢ Γ
+c Aˢ Γ = refl
+
+-- Only the backwards direction for Bool
+Bool←  : ∀ {i}{Γˢ : S.Con i}(Γ : Con Γˢ) → 𝔹 → Ty S.Bool Γ
+Bool← Γ 𝔽 = S.false
+Bool← Γ 𝕋 = S.true

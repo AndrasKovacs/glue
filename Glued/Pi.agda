@@ -36,7 +36,7 @@ import WeakMorphism as F
      {j} {Aˢ} A {l} {θˢ} {θ} {σˢ} σ)} {S._^_ {l} {θˢ} {i} {Γˢ} σˢ {j} Aˢ} (_^_ {l}
      {θˢ} {θ} {i} {Γˢ} {Γ} {σˢ} σ {j} {Aˢ} A)))
 Π[] {i} {Γˢ} {Γ} {j} {Aˢ} {A} {k} {Bˢ} {B} {l} {θˢ} {θ} {σˢ} {σ} =
-     cheat -- OK by Π→nat naturality
+     cheat -- OK by Π→ naturality
 
 
 lam :
@@ -58,7 +58,7 @@ app :
    {Γ} {j} {Aˢ} A {k} {Bˢ} B) tˢ → Tm {i ⊔ j} {S._▶_ {i} Γˢ {j} Aˢ} (_▶_
    {i} {Γˢ} Γ {j} {Aˢ} A) {k} {Bˢ} B (S.app {i} {Γˢ} {j} {Aˢ} {k} {Bˢ}
    tˢ)
-app {i} {Γˢ} {Γ} {j} {Aˢ} {A} {k} {Bˢ} {B} {tˢ} t Γᶠ (Γᴾ , Aᴾ) = t (₁ (F.▶→ Γᶠ)) Γᴾ (₂ (F.▶→ Γᶠ)) Aᴾ
+app {i} {Γˢ} {Γ} {j} {Aˢ} {A} {k} {Bˢ} {B} {tˢ} t Γᶠ ΓAᴾ = t (₁ (F.▶→ Γᶠ)) (₁ ΓAᴾ) (₂ (F.▶→ Γᶠ)) (₂ ΓAᴾ)
 
 -- app[] :
 --      {i : Level} {Γˢ : S.Con i} {Γ : Con i Γˢ} {l : Level} {Δˢ : S.Con l} {Δ : Con l
@@ -162,4 +162,4 @@ app {i} {Γˢ} {Γ} {j} {Aˢ} {A} {k} {Bˢ} {B} {tˢ} t Γᶠ (Γᴾ , Aᴾ) = t
    k)} {Tm {i} {Γˢ} Γ {j ⊔ k} {S.Π {i} {Γˢ} {j} Aˢ {k} Bˢ} (Π {i} {Γˢ} {Γ} {j} {Aˢ}
    A {k} {Bˢ} B) tˢ} (lam {i} {Γˢ} {Γ} {j} {Aˢ} {A} {k} {Bˢ} {B} {S.app {i} {Γˢ}
    {j} {Aˢ} {k} {Bˢ} tˢ} (app {i} {Γˢ} {Γ} {j} {Aˢ} {A} {k} {Bˢ} {B} {tˢ} t)) t
-Πη = refl
+Πη = refl -- refl
