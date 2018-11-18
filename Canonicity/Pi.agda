@@ -12,9 +12,8 @@ import Syntax as S
    {k}{Bˢ : S.Ty (Γˢ S.▶ Aˢ) k} (B : Ty (Γ ▶ A) _ Bˢ)
    → Ty Γ (j ⊔ k) (S.Π Aˢ Bˢ)
 Π {i} {Γˢ} {Γ} {j} {Aˢ} A {k} {Bˢ} B ν νᴾ tˢ =
-  Σ (S.Tm (S.∙ S.▶ Aˢ S.[ ν ]T) (Bˢ S.[ ν S.^ Aˢ ]T)) λ tˢ*
-  → (tˢ ≡ S.lam tˢ*)
-  × ((u : S.Tm S.∙ (Aˢ S.[ ν ]T))(uᴾ : A ν νᴾ u) → B (ν S.,s u) (νᴾ , uᴾ) (tˢ* S.[ S.id S.,s u ]t))
+  ((u : S.Tm S.∙ (Aˢ S.[ ν ]T))(uᴾ : A ν νᴾ u)
+    → B (ν S.,s u) (νᴾ , uᴾ) (S.app tˢ S.[ S.id S.,s u ]t))
 
 Π[] :
    {i : Level} {Γˢ : S.Con i} {Γ : Con i Γˢ} {j : Level} {Aˢ : S.Ty {i} Γˢ j} {A :
@@ -34,11 +33,7 @@ import Syntax as S
    {_▶_ {l} {θˢ} θ {j} {S._[_]T {i} {Γˢ} {j} Aˢ {l} {θˢ} σˢ} (_[_]T {i} {Γˢ} {Γ}
    {j} {Aˢ} A {l} {θˢ} {θ} {σˢ} σ)} {S._^_ {l} {θˢ} {i} {Γˢ} σˢ {j} Aˢ} (_^_ {l}
    {θˢ} {θ} {i} {Γˢ} {Γ} {σˢ} σ {j} {Aˢ} A)))
-Π[] {i} {Γˢ} {Γ} {j} {Aˢ} {A} {k} {Bˢ} {B} {l} {θˢ} {θ} {σˢ} {σ} =
-  ext λ ν → ext λ νᴾ → ext λ tˢ →
-  ap2̃ Σ {!!} -- trivial if REWRITE works
-        {!!} -- also true
-
+Π[] {i} {Γˢ} {Γ} {j} {Aˢ} {A} {k} {Bˢ} {B} {l} {θˢ} {θ} {σˢ} {σ} = cheat --ok
 
 lam :
      {i : Level} {Γˢ : S.Con i} {Γ : Con i Γˢ} {j : Level} {Aˢ : S.Ty {i}
@@ -49,9 +44,7 @@ lam :
      B tˢ → Tm {i} {Γˢ} Γ {j ⊔ k} {S.Π {i} {Γˢ} {j} Aˢ {k} Bˢ} (Π {i} {Γˢ}
      {Γ} {j} {Aˢ} A {k} {Bˢ} B) (S.lam {i} {Γˢ} {j} {Aˢ} {k} {Bˢ} tˢ)
 lam {i} {Γˢ} {Γ} {j} {Aˢ} {A} {k} {Bˢ} {B} {tˢ} t ν νᴾ =
-    (tˢ S.[ ν S.^ Aˢ ]t)
-  , refl
-  , (λ u uᴾ → t (ν S.,s u) (νᴾ , uᴾ))
+  (λ u uᴾ → t (ν S.,s u) (νᴾ , uᴾ))
 
 app :
      {i : Level} {Γˢ : S.Con i} {Γ : Con i Γˢ} {j : Level} {Aˢ : S.Ty {i}
@@ -63,10 +56,7 @@ app :
      {i} {Γˢ} Γ {j} {Aˢ} A) {k} {Bˢ} B (S.app {i} {Γˢ} {j} {Aˢ} {k} {Bˢ}
      tˢ)
 app {i} {Γˢ} {Γ} {j} {Aˢ} {A} {k} {Bˢ} {B} {tˢ} t ν νᴾ =
-  let t* , q , r = t (S.π₁ ν) (₁ νᴾ)
-  in tr (B ν νᴾ)
-        cheat    -- OK
-        (r (S.π₂ ν) (₂ νᴾ))
+   coe cheat (t (S.π₁ ν) (₁ νᴾ) (S.π₂ ν) (₂ νᴾ)) -- OK
 
 Πβ :
    {i : Level} {Γˢ : S.Con i} {Γ : Con i Γˢ} {j : Level} {Aˢ : S.Ty {i} Γˢ j} {A :
