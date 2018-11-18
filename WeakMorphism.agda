@@ -12,7 +12,8 @@ Glued needs:
   - Π natural iso except Πq, lam, app
 
 GlobalSection:
-  - Π← does not work at. Thus, global section can't be a weak morphism!
+  - Π← does not work. Since weak morphisms aren't typable without Π←, global section doesn't seem to be
+    a morphism in an obvious way.
   - El is strict
   - Only Bool← for Bool.
 -}
