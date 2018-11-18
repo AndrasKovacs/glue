@@ -7,6 +7,5 @@ models of type theory in internal languages of other models.
 
 #### TODOs, issues
 
-- Add Bool to syntax and models.
-- Add quote and unquote to glued model.
+- Do a version of glue with quote and unqute
 - Understand better the required components in weak morphisms.
