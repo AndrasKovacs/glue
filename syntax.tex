@@ -79,9 +79,9 @@
   & {\tt[]} && : && \tt[\sigma] = \tt \\
   & \heading{Empty} \\
   & \bot && : && \Ty_0\,\Gamma \\
-  & \abort && : && \Tm\,\Gamma\,\bot\ra\Tm\,\Gamma\,C \\
+  & \exfalso && : && \Tm\,\Gamma\,\bot\ra\Tm\,\Gamma\,C \\
   & {\bot[]} && : && \bot[\sigma] = \bot \\
-  & {\abort[]} && : && (\abort\,t)[\sigma] = \abort\,(t[\sigma]) \\
+  & {\exfalso[]} && : && (\exfalso\,t)[\sigma] = \exfalso\,(t[\sigma]) \\
   & \heading{Coquand universes} \\
   & \U_{\blank} && : && (i:\N)\ra\Ty_{i+1}\,\Gamma \\
   & \El && : && \Tm\,\Gamma\,\U_i \ra \Ty_i\,\Gamma \\
