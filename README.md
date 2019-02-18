@@ -4,8 +4,4 @@
 This repository contains a bunch of experiments with giving various (dependent)
 models of type theory in internal languages of other models.
 
-
-#### TODOs, issues
-
-- Do a version of glue with quote and unqute
-- Understand better the required components in weak morphisms.
+It's a bit out-of-date now, as the definition of weak morphism could be streamlined significantly.
