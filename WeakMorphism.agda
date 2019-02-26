@@ -2,22 +2,6 @@
 
 module WeakMorphism where
 
-{-
-The notion of weak morphism already needs:
-  - Π←, because otherwise we can't type lam
-  - ▶-iso, except ▶p
-
-Glued needs:
-  - preservation of ▶, ∙ up to iso
-  - Π natural iso except Πq, lam, app
-
-GlobalSection:
-  - Π← does not work. Since weak morphisms aren't typable without Π←, global section doesn't seem to be
-    a morphism in an obvious way.
-  - El is strict
-  - Only Bool← for Bool.
--}
-
 
 open import StrictLib hiding (id; _∘_)
 import Syntax as S
