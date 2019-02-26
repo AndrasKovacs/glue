@@ -6,4 +6,4 @@ models of type theory in internal languages of other models.
 
 The project is on hold now, it's also bit out-of-date, as the definition of weak morphism could be dramatically streamlined.
 
-The [Canonicity](Canonicity) folder contains a largely complete proof of canonicity for the syntax; there isn't any internal language magic intended there, it's just given as a normal model in Agda.
+The [Canonicity](Canonicity) folder contains a proof of canonicity (with some obvious annoying proofs omitted) for the syntax; there isn't any internal language magic intended there, it's just given as a normal model in Agda.
